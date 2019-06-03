@@ -30,42 +30,50 @@ public class LargestRectangleInHistogram {
             return 0;
         }
 
+        /*
+         * 1. Initialize the max variable as 0
+         * 2. Initialize Stack named leftIndexes
+         * 3. Initialize the rightIndex as 0
+         * 4. If the leftIndices is empty or the height at rightIndex is greater than
+              the height of the latest index in the stack
+              then push current rightIndex to the stack and increase right index.
+         * 5. Else pop leftIndex from the stack and calculate the are by the height at leftIndex times width.
+         *    width is rightIndex - leftIndices.peek() - 1 or the rightIndex when stack is empty()
+         * 6. The height times width is the area and the area is greater than max then replace max as the area.
+         * 7. go to step 4 until rightIndex is less than the length of input array.
+         * 8. do step 5 and 6 iteratively until the stack is not empty.
+         */
+
         int max = 0;
-
-        Stack<Integer> leftIndexes = new Stack<>();
-
+        Stack<Integer> leftIndices = new Stack<>();
         int rightIndex = 0;
 
-        while (rightIndex < heights.length || leftIndexes.empty() == false) {
-
-            if (rightIndex != heights.length
-                    && (leftIndexes.empty() || heights[leftIndexes.peek()] <= heights[rightIndex])) {
-
-                leftIndexes.push(rightIndex);
+        while (rightIndex < heights.length) {
+            if (leftIndices.empty() || heights[leftIndices.peek()] <= heights[rightIndex]) {
+                leftIndices.push(rightIndex);
                 rightIndex++;
             } else {
-                int leftIndex = leftIndexes.pop();
+                int leftIndex = leftIndices.pop();
 
                 int rectAngle = heights[leftIndex]
-                        * (leftIndexes.empty() ? rightIndex : rightIndex - leftIndexes.peek() - 1);
+                        * (leftIndices.empty() ? rightIndex : rightIndex - leftIndices.peek() - 1);
 
-                // indexes: left:height:right = rectAngle, 2:3:4 = 6, 1:2:4 = 10
                 if (rectAngle > max) {
                     max = rectAngle;
                 }
             }
-
         }
 
-        /*
-         * while(leftIndexes.empty() == false) { int leftIndex = leftIndexes.pop();
-         *
-         * int rectAngle = heights[leftIndex] (leftIndexes.empty() ? rightIndex :
-         * rightIndex - leftIndexes.peek() - 1);
-         *
-         * //indexes: left:height:right = rectAngle, 4:5:6 = 3, 1:4:6 = 8, empty:1:6 = 6
-         * if (rectAngle > max) { max = rectAngle; } }
-         */
+        while (leftIndices.empty() == false) {
+            int leftIndex = leftIndices.pop();
+
+            int rectAngle = heights[leftIndex]
+                    * (leftIndices.empty() ? rightIndex : rightIndex - leftIndices.peek() - 1);
+
+            if (rectAngle > max) {
+                max = rectAngle;
+            }
+        }
 
         return max;
     }

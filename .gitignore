@@ -7,7 +7,6 @@
 **/.mvn/
 **/storage/
 
-tree
 mvnw
 mvnw.cmd
 .editorconfig

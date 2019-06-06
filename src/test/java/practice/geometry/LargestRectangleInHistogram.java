@@ -32,7 +32,7 @@ public class LargestRectangleInHistogram {
 
         /*
          * 1. Initialize the max variable as 0
-         * 2. Initialize Stack named leftIndexes
+         * 2. Initialize Stack named leftIndices
          * 3. Initialize the rightIndex as 0
          * 4. If the leftIndices is empty or the height at rightIndex is greater than
               the height of the latest index in the stack

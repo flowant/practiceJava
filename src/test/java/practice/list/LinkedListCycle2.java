@@ -51,15 +51,20 @@ public class LinkedListCycle2 {
         // 4 = 2 + 2
 
         /*
-         * - slow pointer goes 1 step a time, fast pointer goes 2 steps a time. - if
-         * slow and fast pointers are in the cycle then they are getting closer every
-         * interation. - let's say A as the distance between head and the first node of
-         * cycle , B as the distance between the first node of cycle and the meeting
-         * node - let's say N as the distance of the cycle - A + B = 2A + 2B - N - N = A
-         * + B
+         * - Slow pointer goes 1 step a time, fast pointer goes 2 steps a time.
+         * - If slow and fast pointers are in the cycle then they are getting closer every iteration.
+         * - Let's say A as the distance between head and the first node of cycle,
+         *   B as the distance between the first node of cycle and the meeting node
+         * - Let's say N as the distance of the cycle
+         * - A + B = 2A + 2B - N
+         * - N = A + B
          *
-         * - test case // 1 - 2 - 3 - null => null // 1 - 1 => 1 // 1 - 2 - 3 - 2 => 2
-         * // s 1 2 3 2 // f 1 3 3 // 1 2 // 1 2 1 => 1 //s 1 2 1 2 //f 1 1 1 // 1 2
+         * - test case
+         * 1 - 2 - 3 - null => null
+         * 1 - 1 => 1
+         * 1 - 2 - 3 - 2 => 2
+         * 1 - 2 - 2 => 2
+         *
          */
 
         if (head == null) {
@@ -74,15 +79,14 @@ public class LinkedListCycle2 {
             fast = fast.next.next;
             if (slow == fast) {
                 // here is meeting point, cycle detected.
-                // we use fast point as slow pointer to goes for the distance A
-                fast = head;
-                while (slow != null && fast != null) {
-                    if (fast == slow) {
-                        return slow;
-                    }
+                // fromHead and slow go for the distance A
+                // The start point of cycle is where they are met.
+                ListNode fromHead = head;
+                while (slow != fromHead) {
                     slow = slow.next;
-                    fast = fast.next;
+                    fromHead = fromHead.next;
                 }
+                return fromHead;
             }
         }
 

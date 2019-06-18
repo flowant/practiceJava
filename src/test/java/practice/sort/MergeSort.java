@@ -31,16 +31,14 @@ public class MergeSort {
      */
     public static <T> void sort(T[] in, Comparator<T> c, int leftIndex, int rightIndex) {
         //Input validation
-        if (in == null || c == null || leftIndex < 0 || rightIndex < 0) {
+        if (in == null || c == null || leftIndex < 0 || rightIndex < 0 || leftIndex >= rightIndex) {
             return;
         }
 
-        if (leftIndex < rightIndex) {
-            int middleIndex = (leftIndex + rightIndex) / 2;
-            sort(in, c, leftIndex, middleIndex);
-            sort(in, c, middleIndex + 1, rightIndex);
-            merge(in, c, leftIndex, middleIndex, rightIndex);
-        }
+        int middleIndex = (leftIndex + rightIndex) / 2;
+        sort(in, c, leftIndex, middleIndex);
+        sort(in, c, middleIndex + 1, rightIndex);
+        merge(in, c, leftIndex, middleIndex, rightIndex);
     }
 
     public static <T> void merge(T[] in, Comparator<T> c, int leftIndex, int middleIndex, int rightIndex) {
@@ -53,12 +51,9 @@ public class MergeSort {
         int iLeft = 0;
         int iRight = 0;
 
-        int cntLeft = middleIndex - leftIndex + 1;
-        int cntRight = rightIndex - middleIndex;
-
         // Compare elements of each array from index 0 to length of those arrays.
         // If one of these indexes equals to their length then exit loop.
-        while(iLeft < cntLeft && iRight < cntRight) {
+        while(iLeft < leftArray.length && iRight < rightArray.length) {
             // We assume the order is ascending.
             // Compare the value, copy a smaller value to the In array.
             // Increase the index pointing smaller value and the index of the In array.
@@ -74,11 +69,11 @@ public class MergeSort {
         // One of these arrays still have values that should be copied to the In array.
         // So, if the loop index doesn't equal to it's length,
         // copy rest elements to current position of the In array.
-        while (iLeft < cntLeft) {
+        while (iLeft < leftArray.length) {
             in[iIn++] = leftArray[iLeft++];
         }
 
-        while (iRight < cntRight) {
+        while (iRight < rightArray.length) {
             in[iIn++] = rightArray[iRight++];
         }
     }

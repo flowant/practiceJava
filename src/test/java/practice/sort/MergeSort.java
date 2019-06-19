@@ -66,16 +66,16 @@ public class MergeSort {
             }
         }
 
-        // One of these arrays still have values that should be copied to the In array.
+        // The left array still has values that should be copied to the In array.
         // So, if the loop index doesn't equal to it's length,
         // copy rest elements to current position of the In array.
         while (iLeft < leftArray.length) {
             in[iIn++] = leftArray[iLeft++];
         }
 
-        while (iRight < rightArray.length) {
-            in[iIn++] = rightArray[iRight++];
-        }
+        // The remainders of the right array are the same as the input.
+        // Because they are copied from the input array.
+
     }
 
     static class Person {
